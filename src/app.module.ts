@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './controllers/app.controller';
-import { AppService } from './services/app.service';
+import { DataServicesModule } from './services/data-services/data-services.module';
+import { ProductServicesModule } from './services/use-cases/product/product-services.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
@@ -17,11 +18,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           consumer: {
             groupId: 'an_unique_string_id',
           },
-        }
-      }
-    ])
+        },
+      },
+    ]),
+    DataServicesModule,
+    ProductServicesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

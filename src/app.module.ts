@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './controllers/app.controller';
 import { ProductController } from './controllers/product.controller';
 import { ProductConsumerController } from './controllers/product-consumer.controller';
@@ -8,17 +9,20 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     ClientsModule.register([
       {
-        name: 'any_name_i_want',
+        name: 'PRODUCT_CONSUMER',
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: 'any_client_id_i_want',
-            brokers: ['localhost:29092'],
+            clientId: 'product',
+            brokers: [process.env.KAFKA_CONNECTION_STRING as string],
           },
           consumer: {
-            groupId: 'an_unique_string_id',
+            groupId: 'product_consumer',
           },
         },
       },

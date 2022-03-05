@@ -1,8 +1,5 @@
 import { Controller } from '@nestjs/common';
-import {
-  MessagePattern,
-  Payload,
-} from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import {
   ProductServices,
   ProductFactoryService,
@@ -16,11 +13,9 @@ export class ProductConsumerController {
     private productFactoryService: ProductFactoryService,
   ) {}
 
-  @MessagePattern('product')
+  @MessagePattern('create-product')
   async readMessage(@Payload('value') createProductDto: CreateProductDto) {
-    const response =
-      `Receiving a new message from topic: product: ` +
-      JSON.stringify(createProductDto);
+    const response = `Receiving a new message: ${JSON.stringify(createProductDto)}`;
     console.log(response);
 
     const product =

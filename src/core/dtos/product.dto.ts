@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsDate } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateProductDto {
@@ -11,9 +11,6 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   stock: number;
-
-  @IsDate()
-  updatedAt: Date;
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}

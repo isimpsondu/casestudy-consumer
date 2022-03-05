@@ -5,5 +5,5 @@ export class Product {
 
   stock: number;
 
-  updatedAt: Date;
+  updatedAt: string;
 }

@@ -9,7 +9,7 @@ export class ProductFactoryService {
     newProduct.productId = createProductDto.productId;
     newProduct.price = createProductDto.price;
     newProduct.stock = createProductDto.stock;
-    newProduct.updatedAt = createProductDto.updatedAt;
+    newProduct.updatedAt = new Date().toISOString();
 
     return newProduct;
   }
@@ -19,7 +19,7 @@ export class ProductFactoryService {
     newProduct.productId = updateProductDto.productId;
     newProduct.price = updateProductDto.price;
     newProduct.stock = updateProductDto.stock;
-    newProduct.updatedAt = updateProductDto.updatedAt;
+    newProduct.updatedAt = new Date().toISOString();
 
     return newProduct;
   }

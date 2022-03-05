@@ -1,13 +1,10 @@
 import { Controller } from '@nestjs/common';
-import {
-  MessagePattern,
-  Payload,
-} from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import {
   ProductServices,
   ProductFactoryService,
 } from '../services/use-cases/product';
-import { CreateProductDto } from '../core/dtos';
+import { UpsertProductDto } from '../core/dtos';
 
 @Controller()
 export class ProductConsumerController {
@@ -16,16 +13,22 @@ export class ProductConsumerController {
     private productFactoryService: ProductFactoryService,
   ) {}
 
-  @MessagePattern('product')
-  async readMessage(@Payload('value') createProductDto: CreateProductDto) {
-    const response =
-      `Receiving a new message from topic: product: ` +
-      JSON.stringify(createProductDto);
+  @MessagePattern('create-product')
+  async readMessage(@Payload('value') createProductDto: UpsertProductDto) {
+    const response = `Receiving a new message: ${JSON.stringify(
+      createProductDto,
+    )}`;
     console.log(response);
 
-    const product =
-      this.productFactoryService.createNewProduct(createProductDto);
-    const createdProduct = await this.productServices.createProduct(product);
-    return createdProduct;
+    const product = this.productFactoryService.upsertProduct(createProductDto);
+    try {
+      const createdProduct = await this.productServices.upsertProduct(
+        product.productId,
+        product,
+      );
+      return createdProduct;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

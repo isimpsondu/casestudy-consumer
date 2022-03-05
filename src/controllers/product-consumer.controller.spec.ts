@@ -32,10 +32,14 @@ describe('ProductConsumerController', () => {
     );
   });
 
-  describe('readMessage', () => {
-    it('should return the created product', async () => {
-      const upsertProductDto = new UpsertProductDto();
-      const product = await productConsumerController.createProduct(
+  describe('upsertProduct', () => {
+    it('should return the upserted product', async () => {
+      const upsertProductDto: UpsertProductDto = {
+        productId: '99c517d3-6759-4872-9bf4-2a776d3c2a33',
+        price: 54.88,
+        stock: 1000
+      };
+      const product = await productConsumerController.upsertProductHandler(
         upsertProductDto,
       );
       expect(product.productId).toEqual(upsertProductDto.productId);

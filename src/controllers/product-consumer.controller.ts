@@ -13,8 +13,10 @@ export class ProductConsumerController {
     private productFactoryService: ProductFactoryService,
   ) {}
 
-  @MessagePattern('create-product')
-  async createProduct(@Payload('value') upsertProductDto: UpsertProductDto) {
+  @MessagePattern('upsert-product')
+  async upsertProductHandler(
+    @Payload('value') upsertProductDto: UpsertProductDto,
+  ) {
     const response = `Receiving a new message: ${JSON.stringify(
       upsertProductDto,
     )}`;
@@ -22,13 +24,24 @@ export class ProductConsumerController {
 
     const product = this.productFactoryService.upsertProduct(upsertProductDto);
     try {
-      const createdProduct = await this.productServices.upsertProduct(
+      const upsertedProduct = await this.productServices.upsertProduct(
         product.productId,
         product,
       );
-      return createdProduct;
+      return upsertedProduct;
     } catch (error) {
       console.error(error);
     }
+  }
+
+  @MessagePattern('upsert-product-dead-letter')
+  async upsertProductDeadLetterHandler(
+    @Payload('value') upsertProductDto: UpsertProductDto,
+  ) {
+    const response = `Receiving a new message: ${JSON.stringify(
+      upsertProductDto,
+    )}`;
+    // TO DO - handle failed case
+    console.log(response);
   }
 }

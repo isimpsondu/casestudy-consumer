@@ -14,13 +14,13 @@ export class ProductConsumerController {
   ) {}
 
   @MessagePattern('create-product')
-  async readMessage(@Payload('value') createProductDto: UpsertProductDto) {
+  async createProduct(@Payload('value') upsertProductDto: UpsertProductDto) {
     const response = `Receiving a new message: ${JSON.stringify(
-      createProductDto,
+      upsertProductDto,
     )}`;
     console.log(response);
 
-    const product = this.productFactoryService.upsertProduct(createProductDto);
+    const product = this.productFactoryService.upsertProduct(upsertProductDto);
     try {
       const createdProduct = await this.productServices.upsertProduct(
         product.productId,

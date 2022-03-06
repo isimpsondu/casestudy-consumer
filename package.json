@@ -30,7 +30,6 @@
     "class-validator": "^0.13.2",
     "kafkajs": "^1.16.0",
     "mongoose": "^6.2.4",
-    "mongoose-autopopulate": "^0.16.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import {
-  ProductServices,
+  ProductService,
   ProductFactoryService,
 } from '../services/use-cases/product';
 import { UpsertProductDto } from '../core/dtos';
@@ -9,7 +9,7 @@ import { UpsertProductDto } from '../core/dtos';
 @Controller()
 export class ProductConsumerController {
   constructor(
-    private productServices: ProductServices,
+    private productServices: ProductService,
     private productFactoryService: ProductFactoryService,
   ) {}
 

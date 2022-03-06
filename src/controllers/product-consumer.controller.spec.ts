@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductConsumerController } from './product-consumer.controller';
 import {
-  ProductServices,
+  ProductService,
   ProductFactoryService,
 } from '../services/use-cases/product';
 import { UpsertProductDto } from '../core/dtos';
@@ -18,7 +18,7 @@ describe('ProductConsumerController', () => {
 
   beforeEach(async () => {
     const ProductServicesProvider = {
-      provide: ProductServices,
+      provide: ProductService,
       useClass: ProductServicesMock,
     };
 

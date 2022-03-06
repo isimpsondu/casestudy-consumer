@@ -10,10 +10,6 @@ export class MongoGenericRepository<T> implements IGenericRepository<T> {
     this._populateOnFind = populateOnFind;
   }
 
-  getAll(): Promise<T[]> {
-    return this._repository.find().populate(this._populateOnFind).exec();
-  }
-
   upsert(filter: any, item: T) {
     return this._repository.findOneAndUpdate(filter, item, {
       upsert: true,
